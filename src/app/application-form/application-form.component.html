@@ -1,0 +1,57 @@
+<h2>ฟอร์มสมัครบัตรเครดิต</h2>
+
+<form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" *ngIf="!submitted">
+  <div>
+    <label>ชื่อผู้สมัคร:</label>
+    <input type="text" formControlName="applicantName" />
+  </div>
+
+  <div>
+    <label>รายได้ต่อเดือน:</label>
+    <input type="number" formControlName="monthlyIncome" />
+  </div>
+
+  <div>
+    <label>รายจ่ายต่อเดือน:</label>
+    <input type="number" formControlName="monthlyExpense" />
+  </div>
+
+  <button type="submit">ส่งใบสมัคร</button>
+</form>
+
+<div *ngIf="submitted">
+  <h3>ผลการสมัคร:</h3>
+  <p>สถานะเครดิต (Credit Check Status): {{ response?.creditCheckStatus }}</p>
+  <p>ความสามารถในการชำระหนี้: {{ response?.repaymentCapacity }}</p>
+  <p>สถานะการเงิน (Financial Status): {{ response?.repaymentCapacityStatus }}</p>
+</div>
+
+<hr />
+
+<h2>รายการใบสมัครทั้งหมด</h2>
+<table border="1" *ngIf="applicationList.length > 0; else noData">
+  <thead>
+    <tr>
+      <th>ชื่อผู้สมัคร</th>
+      <th>รายได้ต่อเดือน</th>
+      <th>รายจ่ายต่อเดือน</th>
+      <th>สถานะเครดิต</th>
+      <th>ความสามารถในการชำระหนี้</th>
+      <th>สถานะการเงิน</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let app of applicationList">
+      <td>{{ app.applicantName }}</td>
+      <td>{{ app.monthlyIncome }}</td>
+      <td>{{ app.monthlyExpense }}</td>
+      <td>{{ app.creditCheckStatus }}</td>
+      <td>{{ app.repaymentCapacity }}</td>
+      <td>{{ app.financialStatus }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #noData>
+  <p>ไม่มีข้อมูลใบสมัคร</p>
+</ng-template>
